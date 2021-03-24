@@ -11,8 +11,203 @@
   </head>
   <body>
     <div class="container">
-      <div class="column deck-header">DECK:</div>
-      <div id="deck-container" class="row deck-container"></div>
+      <!-- MAIN -->
+      <div id="main" class="main">
+        <!-- MAIN HEADER AREA -->
+        <div id="main-header" class="main-header">WAR</div>
+        <!-- MAIN PLAY AREA -->
+        <div id="main-play-area" class="main-play-area">
+          <!-- CARD PLAY SECTION -->
+          <div id="card-play-section" class="card-play-section">
+            <div id="deck-card" class="card-wrapper deck-card">
+              <img
+                src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/red.png"
+                alt="playing card back"
+                id="deck-card-img"
+                class="card deck-card-img"
+              />
+            </div>
+            <!-- img tag here to be replaced with dynamic js image of card in play -->
+            <div
+              id="computer-play-card"
+              class="card-wrapper computer-play-card"
+            >
+              <img
+                src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523439/PlayingCards/war-deck-png/backs/blank_card_a0kvtt.png"
+                alt="front of playing card"
+                id="computer-play-card-img"
+                class="card computer-play-card-img"
+              />
+            </div>
+            <!-- img tag here to be replaced with dynamic js image of card in play -->
+            <div id="player-play-card" class="card-wrapper player-play-card">
+              <img
+                src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523439/PlayingCards/war-deck-png/backs/blank_card_a0kvtt.png"
+                alt="front of playing card"
+                id="player-play-card-img"
+                class="card player-play-card-img"
+              />
+            </div>
+          </div>
+          <!-- DISCARD SECTION -->
+          <div id="discard-section" class="discard-section">
+            <div id="computer-discard" class="card-wrapper computer-discard">
+              <img
+                src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/red.png"
+                alt="back of playing card"
+                id="computer-discard-img"
+                class="card computer-discard-img"
+              />
+            </div>
+            <div id="player-discard" class="card-wrapper player-discard">
+              <img
+                src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/red.png"
+                alt="back of playing card"
+                id="player-discard-img"
+                class="card player-discard-img"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- MAIN SCORE AREA -->
+        <div id="main-score-area" class="main-score-area">
+          <!-- COMPUTER SCORE BOX -->
+          <div id="computer-score" class="computer-score">0</div>
+          <!-- PLAY BTN BOX -->
+          <div id="play-btn-container" class="play-btn-container">
+            <span id="play-btn" class="btn play-btn">Play</span>
+          </div>
+          <!-- PLAYER SCORE BOX -->
+          <div id="player-score" class="player-score">0</div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR COLLAPSE BTN -->
+      <div id="sidebar-btn-wrapper" class="sidebar-btn-wrapper">
+        <span id="sidebar-collapse-btn" class="sidebar-collapse-btn">&lt;</span>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-wrapper">
+          <!-- SIDEBAR TOP -->
+          <div id="sidebar-top" class="sidebar-top">
+            <!-- SIDEBAR TOP HEADER -->
+            <div id="sidebar-top-header" class="sidebar-top-header">
+              Change deck design
+            </div>
+            <!-- SIDEBAR TOP CONTENTS -->
+            <div id="sidebar-top-contents" class="sidebar-top-contents">
+              <img
+                src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/red.png"
+                alt="red design card back"
+                id="red"
+                class="card-design card-design-red"
+              />
+
+              <img
+                src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523439/PlayingCards/war-deck-png/backs/blue.png"
+                alt="blue design card back"
+                id="blue"
+                class="card-design card-design-blue"
+              />
+
+              <img
+                src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523439/PlayingCards/war-deck-png/backs/abstract.png"
+                alt="abstract design card back"
+                id="abstract"
+                class="card-design card-design-abstract"
+              />
+
+              <img
+                src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523439/PlayingCards/war-deck-png/backs/abstract_clouds.png"
+                alt="abstract-clouds design card back"
+                id="abstract-clouds"
+                class="card-design card-design-abstract-clouds"
+              />
+
+              <img
+                src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/abstract_scene.png"
+                alt="abstract-scene design card back"
+                id="abstract-scene"
+                class="card-design card-design-abstract-scene"
+              />
+
+              <img
+                src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523439/PlayingCards/war-deck-png/backs/cars.png"
+                alt="cars design card back"
+                id="cars"
+                class="card-design card-design-cars"
+              />
+
+              <img
+                src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523439/PlayingCards/war-deck-png/backs/astronaut.png"
+                alt="astronaut design card back"
+                id="astronaut"
+                class="card-design card-design-astronaut"
+              />
+
+              <img
+                src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/frog.png"
+                alt="frog design card back"
+                id="frog"
+                class="card-design card-design-frog"
+              />
+
+              <img
+                src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/fish.png"
+                alt="fish design card back"
+                id="fish"
+                class="card-design card-design-fish"
+              />
+            </div>
+          </div>
+          <!-- SIDEBAR BOTTOM -->
+          <div id="sidebar-bottom" class="sidebar-bottom">
+            <!-- SIDEBAR BOTTOM HEADER -->
+            <div id="sidebar-bottom-header" class="sidebar-bottom-header">
+              Game rules
+            </div>
+            <!-- SIDEBAR BOTTOM CONTENTS -->
+            <div id="rules-btn-container" class="btn rules-btn-container">
+              <span id="rules-btn" class="btn rules-btn"
+                >Click for game rules</span
+              >
+            </div>
+            <!-- MODAL -->
+            <div id="modal-background">
+              <div id="modal">
+                <span id="close-btn">&times;</span>
+                <h3>Rules</h3>
+                <p>The goal is to be the first player to win all 52 cards</p>
+                <h5>THE DEAL</h5>
+                <p>
+                  The deck is divided evenly, with each player receiving 26
+                  cards, dealt one at a time, face down. Anyone may deal first.
+                  Each player places their stack of cards face down, in front of
+                  them.
+                </p>
+                <h5>THE PLAY</h5>
+                <p>
+                  Each player turns up a card at the same time and the player
+                  with the higher card takes both cards and puts them, face
+                  down, on the bottom of his stack. If the cards are the same
+                  rank, it is War. Each player turns up one card face down and
+                  one card face up. The player with the higher cards takes both
+                  piles (six cards). If the turned-up cards are again the same
+                  rank, each player places another card face down and turns
+                  another card face up. The player with the higher card takes
+                  all 10 cards, and so on.
+                </p>
+                <h5>HOW TO KEEP SCORE</h5>
+                <p>The game ends when one player has won all the cards.</p>
+              </div>
+            </div>
+            <!--  -->
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
