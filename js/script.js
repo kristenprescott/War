@@ -85,7 +85,8 @@ class Player {
   //methods
   playCard = () => {
     // console.log(this);
-    return this.hand[this.hand.length - 1];
+    let cardInPlay = this.hand[this.hand.length - 1];
+    return cardInPlay;
   };
   updateScore = () => {
     this.score = this.hand.length + this.discardPile.length;
@@ -111,24 +112,21 @@ const player = new Player("Kristen");
 
 //#endregion INSTANCES
 
-//#region GAMEPLAY:
+//#region WAR:
 
 // ask for player name
 
 // shuffle/deal
 newDeck.deal(computer, player);
-// <<<-------------------------------------------------------------------------- organize code: create one play() function
-// take turn:
-const battle = () => {
-  //
-  const computersCard = computer.playCard();
-  const playersCard = player.playCard();
-  // <<<-------------------------------------------------------------------------- add card images where needed
-  //   const computersCardImg = `./${card.id}.png`;
-  //   const playersCardImg = `./PATH${card.id}.png`;
-  //   const computersCardDiv = document.createElement("div");
-  //   computersCardDiv.image source = computersCardImg;
 
+//#region GLOBAL VARIABLES:
+const computersCard = computer.playCard();
+const playersCard = player.playCard();
+//#endregion GLOBAL VARIABLES
+
+//#region FUNCTIONS:
+//#region COMPARE CARDS (future function)
+const compareCards = () => {
   // compare cards:
   if (computersCard.value === playersCard.value) {
     // console.log("draw");
@@ -140,7 +138,8 @@ const battle = () => {
     player.hand.pop();
     player.discardPile.push(playersCard);
     // <<<-------------------------------------------------------------------------- change image to next card in stack of hand[] for both computersCard & playersCard
-  } else if (computersCard.value > playersCard.value) {
+  }
+  if (computersCard.value > playersCard.value) {
     // console.log("computer wins with: " + computersCard.name);
     // <<<-------------------------------------------------------------------------- print 'you lost this battle, but you may win the war yet'
     // <<<-------------------------------------------------------------------------- explode playersCard
@@ -157,32 +156,59 @@ const battle = () => {
     player.discardPile.push(computersCard, playersCard);
     // <<<-------------------------------------------------------------------------- change image to next card in stack of hand[] for both computersCard & playersCard
   }
-  // <<<-------------------------------------------------------------------------- testing game full run:
-  console.log("computer: ");
-  //   console.log(computer.score);
+};
+//#endregion COMPARE CARDS
+
+//#endregion FUNCTIONS
+
+//#region BATTLE
+// battle:
+const battle = () => {
+  compareCards();
+
   computer.updateScore();
-  console.log(computer.score);
-  console.log("player: ");
-  //   console.log(player.score);
   player.updateScore();
-  console.log(player.score);
+  //   // <<<-------------------------------------------------------------------------- for testing game full run + updateScore() of both computer and player:
+  //   console.log("computer: ");
+  //   console.log(computer.score);
+  //   console.log("player: ");
+  //   console.log(player.score);
+
   // ^print score to DOM instead here^
   // <<<-------------------------------------------------------------------------- print scores to DOM under cardCount(divs called computer/playerScore or computer/player-score i think)
   // check if players hands.length + players discardPile.length = deck.length
+
+  //#region CHECK FOR WINNER (future function)
   // basically, check if anyone won the game yet
   if (
     computer.score === newDeck.deckLength ||
     player.score === newDeck.deckLength
   ) {
+    // console.log("computer: ");
+    // console.log(computer.score);
+    // console.log("player: ");
+    // console.log(player.score);
     // console.log("game over");
     // <<<-------------------------------------------------------------------------- print "some war quote about how its tough and lets see who won"
     const winner = computer.score === newDeck.deckLength ? computer : player;
-    console.log(winner);
+    const loser = computer.score === 0 ? computer : player;
+    // testing winner/loser logic:
+    console.log(winner.discardPile.length);
+    console.log(loser.discardPile.length);
+    console.log(winner.name);
+    console.log(winner.score);
+    console.log(loser.name);
+    console.log(loser.score);
     // <<<-------------------------------------------------------------------------- print winner announcement
+    // <<<-------------------------------------------------------------------------- issue: how to access name of computer or player if winner
     return winner;
   }
+  //#endregion CHECK FOR WINNER
+
   // <<<-------------------------------------------------------------------------- BELOW:
-  // <<<-------------------------------------------------------------------------- issue: if click event to flip card lives on playerCard, how to render that card while/after the hand[] stack is empty and the discardPile is shuffled
+  // <<<-------------------------------------------------------------------------- issue:
+  // <<<------------------------------------------ if click event to flip card lives on playerCard, how to render that card while/after the hand[] stack is empty and the discardPile is shuffled
+  //#region CHECK FOR EMPTY HANDS TO RESHUFFLE AND USE AS NEW HAND (future function)
   // check if players hands are empty
   if (computer.hand.length === 0) {
     // shuffle discardPile
@@ -196,7 +222,13 @@ const battle = () => {
     // push discardPile to hand
     player.hand = player.discardPile.splice(0, player.discardPile.length);
   }
+  //#endregion CHECK FOR EMPTY HANDS TO RESHUFFLE AND USE AS NEW HAND
 };
+
+//#endregion BATTLE
+
+//#region DOM INTERACTION: ALERT WINNER, END GAME
+// <<<-------------------------------------------------------------------------- testing game full run + updateScore() of both computer and player:
 for (let i = 0; i < 10000; i++) {
   const winner = battle();
   if (winner) {
@@ -204,7 +236,8 @@ for (let i = 0; i < 10000; i++) {
   }
 }
 // <<<-------------------------------------------------------------------------- alert(winnerwinnerchickendinner!)
-//#endregion GAMEPLAY
+//#endregion DOM INTERACTION: ALERT WINNER, END GAME
+//#endregion WAR
 
 //#region DOM RENDER:
 //#region CARD BACK DESIGN SELECTION:
