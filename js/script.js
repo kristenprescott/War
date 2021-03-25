@@ -4,9 +4,13 @@ class Deck {
     this.deck = [];
     this.deckLength = 0;
 
-    const suits = ["Spades", "Hearts", "Clubs", "Diamonds"];
+    const suits = ["Spades", "Hearts"];
+    // const suits = ["Spades", "Hearts", "Clubs", "Diamonds"];
+
+    // const ranks = ["2", "3"];
 
     const ranks = [
+      "A",
       "2",
       "3",
       "4",
@@ -19,7 +23,7 @@ class Deck {
       "J",
       "Q",
       "K",
-      "A",
+      //   "A",
     ];
 
     // pushes { rank: rank, suit: suit }
@@ -84,12 +88,15 @@ class Player {
   }
   //methods
   playCard = () => {
-    // console.log(this);
-    let cardInPlay = this.hand[this.hand.length - 1];
-    return cardInPlay;
+    // let cardInPlay = this.hand[this.hand.length - 1];
+    // return cardInPlay;
+
+    return this.hand[this.hand.length - 1];
   };
-  updateScore = () => {
+  updateScore = (domRef) => {
     this.score = this.hand.length + this.discardPile.length;
+    // print score to DOM:
+    domRef.innerText = this.score;
   };
 }
 
@@ -112,51 +119,66 @@ const newDeck = new Deck();
 const battle = (computer, player) => {
   const computersCard = computer.playCard();
   const playersCard = player.playCard();
+
   //#region COMPARE CARDS
   // compare cards:
   if (computersCard.value === playersCard.value) {
-    // console.log("draw");
+    console.log("ITS A DRAW");
+    console.log("computer card/value: ");
+    console.log(computersCard.name);
+    console.log(computersCard.value);
+    console.log("player card/value: ");
+    console.log(playersCard.name);
+    console.log(playersCard.value);
     // <<<-------------------------------------------------------------------------- print ('draw')
     // <<<-------------------------------------------------------------------------- some animation
     // pop last card out of hand, push into discard pile(for computersCard & playersCard)
-    computer.hand.pop();
-    computer.discardPile.push(computersCard);
-    player.hand.pop();
-    player.discardPile.push(playersCard);
-  }
-  if (computersCard.value > playersCard.value) {
-    // console.log("computer wins with: " + computersCard.name);
+    computer.discardPile.push(
+      computer.hand.splice(computer.hand.length - 1, 1)
+    );
+
+    player.discardPile.push(player.hand.splice(player.hand.length - 1, 1));
+  } else if (computersCard.value > playersCard.value) {
+    console.log("COMPUTER WINS with: " + computersCard.name);
+    console.log("computer card/value: ");
+    console.log(computersCard.name);
+    console.log(computersCard.value);
+    console.log("player card/value: ");
+    console.log(playersCard.name);
+    console.log(playersCard.value);
     // <<<-------------------------------------------------------------------------- print 'you lost this battle, but you may win the war yet'
     // <<<-------------------------------------------------------------------------- explode playersCard
-    player.hand.pop();
-    computer.hand.pop();
-    computer.discardPile.push(computersCard, playersCard);
+    computer.discardPile.push(
+      player.hand.splice(player.hand.length - 1, 1),
+      computer.hand.splice(computer.hand.length - 1, 1)
+    );
   } else {
-    // console.log("player wins with: " + playersCard.name);
+    console.log("PLAYER WINS with: " + playersCard.name);
+    console.log("computer card/value: ");
+    console.log(computersCard.name);
+    console.log(computersCard.value);
+    console.log("player card/value: ");
+    console.log(playersCard.name);
+    console.log(playersCard.value);
     // <<<-------------------------------------------------------------------------- print 'you won this battle!'
     // <<<-------------------------------------------------------------------------- explode computersCard
-    computer.hand.pop();
-    player.hand.pop();
-    player.discardPile.push(computersCard, playersCard);
+    player.discardPile.push(
+      computer.hand.splice(computer.hand.length - 1, 1),
+      player.hand.splice(player.hand.length - 1, 1)
+    );
   }
   //#endregion COMPARE CARDS
 
-  computer.updateScore();
-  player.updateScore();
-  //   console.log("computer: ");
-  //   console.log(computer.score);
-  //   console.log("player: ");
-  //   console.log(player.score);
+  //#region UPDATE & PRINT SCORES:
+  const computerScore = document.getElementById("computer-score");
+  const playerScore = document.getElementById("player-score");
+  computer.updateScore(computerScore);
+  player.updateScore(playerScore);
+  //#endregion UPDATE & PRINT SCORES
 
-  // print scores to DOM:
-  //
-
-  // ^print score to DOM instead here^
-  // <<<-------------------------------------------------------------------------- print scores to DOM under cardCount(divs called computer/playerScore or computer/player-score i think)
+  //#region CHECK FOR WINNER
   // check if players hands.length + players discardPile.length = deck.length
-
-  //#region CHECK FOR WINNER (future function)
-  // basically, check if anyone won the game yet
+  // check if anyone won the game yet
   if (
     computer.score === newDeck.deckLength ||
     player.score === newDeck.deckLength
@@ -168,14 +190,16 @@ const battle = (computer, player) => {
     // console.log("game over");
     // <<<-------------------------------------------------------------------------- print "some war quote about how its tough and lets see who won"
     const winner = computer.score === newDeck.deckLength ? computer : player;
-    const loser = computer.score === 0 ? computer : player;
+    const loser = computer.score === "0" ? computer : player;
     // testing winner/loser logic:
-    console.log(winner.discardPile.length);
-    console.log(loser.discardPile.length);
+    console.log("winner: ");
     console.log(winner.name);
     console.log(winner.score);
+    console.log(winner.discardPile.length);
+    console.log("loser: ");
     console.log(loser.name);
     console.log(loser.score);
+    console.log(loser.discardPile.length);
     // <<<-------------------------------------------------------------------------- print winner announcement
     return winner;
   }
@@ -223,7 +247,7 @@ const urlPrefix =
   "https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523441/PlayingCards/war-deck-png/";
 
 deckCard.addEventListener("click", () => {
-  console.log(newDeck);
+  //   console.log(newDeck);
   // shuffle deck
   newDeck.shuffle();
   // deal
@@ -242,12 +266,13 @@ playerPlayCard.addEventListener("click", () => {
   // player card is replaced with current card being played
   //   console.log(player.playCard());
   const playerCardInPlay = player.playCard();
-  //   console.log(playerCardInPlay);
-  console.log(playerCardInPlay.id);
+  //   console.log("playerCardInPlay: ");
+  //   console.log(playerCardInPlay.id);
   playerPlayCard.innerHTML = `<img src="${urlPrefix}${playerCardInPlay.id}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
   // computer card is also replaced
   const computerCardInPlay = computer.playCard();
-  console.log(computerCardInPlay.id);
+  //   console.log("computerCardInPlay: ");
+  //   console.log(computerCardInPlay.id);
   computerPlayCard.innerHTML = `<img src="${urlPrefix}${computerCardInPlay.id}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
   // computer-/player-discard should now display
   computerDiscard.style.display = "flex";
