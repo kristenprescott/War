@@ -96,37 +96,23 @@ class Player {
 //#endregion CLASSES
 
 //#region INSTANCES
-
-const newDeck = new Deck();
-// <<<-------------------------------------------------------------------------- organize code:
-// global variables, instantiations (are those glob vars?)
-// console.log(newDeck.deck[0].name, newDeck.deck[22].name);
-
-newDeck.shuffle();
-// console.log(newDeck.deck[0].name, newDeck.deck[22].name);
-
+// instantiate new Players
 const computer = new Player("Computer");
-// <<<-------------------------------------------------------------------------- redefine player as input.value
-// also, make an input.
 const player = new Player("Kristen");
-
+// instantiate new Deck, shuffle deck
+const newDeck = new Deck();
 //#endregion INSTANCES
 
 //#region WAR:
 
 // ask for player name
 
-// shuffle/deal
-newDeck.deal(computer, player);
-
-//#region GLOBAL VARIABLES:
-const computersCard = computer.playCard();
-const playersCard = player.playCard();
-//#endregion GLOBAL VARIABLES
-
-//#region FUNCTIONS:
-//#region COMPARE CARDS (future function)
-const compareCards = () => {
+//#region BATTLE
+// battle:
+const battle = (computer, player) => {
+  const computersCard = computer.playCard();
+  const playersCard = player.playCard();
+  //#region COMPARE CARDS
   // compare cards:
   if (computersCard.value === playersCard.value) {
     // console.log("draw");
@@ -137,7 +123,6 @@ const compareCards = () => {
     computer.discardPile.push(computersCard);
     player.hand.pop();
     player.discardPile.push(playersCard);
-    // <<<-------------------------------------------------------------------------- change image to next card in stack of hand[] for both computersCard & playersCard
   }
   if (computersCard.value > playersCard.value) {
     // console.log("computer wins with: " + computersCard.name);
@@ -146,7 +131,6 @@ const compareCards = () => {
     player.hand.pop();
     computer.hand.pop();
     computer.discardPile.push(computersCard, playersCard);
-    // <<<-------------------------------------------------------------------------- change image to next card in stack of hand[] for both computersCard & playersCard
   } else {
     // console.log("player wins with: " + playersCard.name);
     // <<<-------------------------------------------------------------------------- print 'you won this battle!'
@@ -154,25 +138,18 @@ const compareCards = () => {
     computer.hand.pop();
     player.hand.pop();
     player.discardPile.push(computersCard, playersCard);
-    // <<<-------------------------------------------------------------------------- change image to next card in stack of hand[] for both computersCard & playersCard
   }
-};
-//#endregion COMPARE CARDS
-
-//#endregion FUNCTIONS
-
-//#region BATTLE
-// battle:
-const battle = () => {
-  compareCards();
+  //#endregion COMPARE CARDS
 
   computer.updateScore();
   player.updateScore();
-  //   // <<<-------------------------------------------------------------------------- for testing game full run + updateScore() of both computer and player:
   //   console.log("computer: ");
   //   console.log(computer.score);
   //   console.log("player: ");
   //   console.log(player.score);
+
+  // print scores to DOM:
+  //
 
   // ^print score to DOM instead here^
   // <<<-------------------------------------------------------------------------- print scores to DOM under cardCount(divs called computer/playerScore or computer/player-score i think)
@@ -200,15 +177,11 @@ const battle = () => {
     console.log(loser.name);
     console.log(loser.score);
     // <<<-------------------------------------------------------------------------- print winner announcement
-    // <<<-------------------------------------------------------------------------- issue: how to access name of computer or player if winner
     return winner;
   }
   //#endregion CHECK FOR WINNER
 
-  // <<<-------------------------------------------------------------------------- BELOW:
-  // <<<-------------------------------------------------------------------------- issue:
-  // <<<------------------------------------------ if click event to flip card lives on playerCard, how to render that card while/after the hand[] stack is empty and the discardPile is shuffled
-  //#region CHECK FOR EMPTY HANDS TO RESHUFFLE AND USE AS NEW HAND (future function)
+  //#region CHECK FOR EMPTY HANDS TO RESHUFFLE AND USE AS NEW HAND:
   // check if players hands are empty
   if (computer.hand.length === 0) {
     // shuffle discardPile
@@ -229,340 +202,57 @@ const battle = () => {
 
 //#region DOM INTERACTION: ALERT WINNER, END GAME
 // <<<-------------------------------------------------------------------------- testing game full run + updateScore() of both computer and player:
-for (let i = 0; i < 10000; i++) {
-  const winner = battle();
-  if (winner) {
-    break;
-  }
-}
+// for (let i = 0; i < 500; i++) {
+//   const winner = battle();
+//   if (winner) {
+//     break;
+//   }
+// }
 // <<<-------------------------------------------------------------------------- alert(winnerwinnerchickendinner!)
 //#endregion DOM INTERACTION: ALERT WINNER, END GAME
+
 //#endregion WAR
 
-//#region DOM RENDER:
-//#region CARD BACK DESIGN SELECTION:
-// cached DOM elements:
-const red = document.getElementById("red");
-const blue = document.getElementById("blue");
-const abstract = document.getElementById("abstract");
-const abstractClouds = document.getElementById("abstract-clouds");
-const abstractScene = document.getElementById("abstract-scene");
-const cars = document.getElementById("cars");
-const astronaut = document.getElementById("astronaut");
-const frog = document.getElementById("frog");
-const fish = document.getElementById("fish");
-
-// variables:
-const imgBackPrefix =
-  "https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/";
-
-// callback functions for click events:
-//red:
-const handleRedDesignChange = () => {
-  // deck card
-  const redDesign = document.createElement("img");
-  redDesign.style.display = "flex";
-  redDesign.style.justifyContent = "space-around";
-  const deckCard = document.getElementById("deck-card");
-  deckCard.innerHTML = `<img src="${imgBackPrefix}red.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  const redComputerDesign = document.createElement("img");
-  redComputerDesign.style.display = "flex";
-  redComputerDesign.style.justifyContent = "space-around";
-  redComputerDesign.style.boxShadow =
-    "-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);";
-  const computerDiscard = document.getElementById("computer-discard");
-  computerDiscard.innerHTML = `<img src="${imgBackPrefix}red.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  // player discard
-  const redPlayerDesign = document.createElement("img");
-  redPlayerDesign.style.display = "flex";
-  redPlayerDesign.style.justifyContent = "space-around";
-  const playerDiscard = document.getElementById("player-discard");
-  playerDiscard.innerHTML = `<img src="${imgBackPrefix}red.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-};
-
-//blue:
-const handleBlueDesignChange = () => {
-  // deck card
-  const blueDesign = document.createElement("img");
-  blueDesign.style.display = "flex";
-  blueDesign.style.justifyContent = "space-around";
-  blueDesign.style.borderRadius = "1rem";
-  const deckCard = document.getElementById("deck-card");
-  deckCard.innerHTML = `<img src="${imgBackPrefix}blue.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  //computer discard
-  const blueComputerDesign = document.createElement("img");
-  blueComputerDesign.style.display = "flex";
-  blueComputerDesign.style.justifyContent = "space-around";
-  const computerDiscard = document.getElementById("computer-discard");
-  computerDiscard.innerHTML = `<img src="${imgBackPrefix}blue.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  // player discard
-  const bluePlayerDesign = document.createElement("img");
-  bluePlayerDesign.style.display = "flex";
-  bluePlayerDesign.style.justifyContent = "space-around";
-  const playerDiscard = document.getElementById("player-discard");
-  playerDiscard.innerHTML = `<img src="${imgBackPrefix}blue.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-};
-
-//abstract:
-const handleAbstractDesignChange = () => {
-  // deck card
-  const abstractDesign = document.createElement("img");
-  abstractDesign.style.display = "flex";
-  abstractDesign.style.justifyContent = "space-around";
-  abstractDesign.style.borderRadius = "1rem";
-  const deckCard = document.getElementById("deck-card");
-  deckCard.innerHTML = `<img src="${imgBackPrefix}abstract.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  //computer discard
-  const abstractComputerDesign = document.createElement("img");
-  abstractComputerDesign.style.display = "flex";
-  abstractComputerDesign.style.justifyContent = "space-around";
-  const computerDiscard = document.getElementById("computer-discard");
-  computerDiscard.innerHTML = `<img src="${imgBackPrefix}abstract.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  // player discard
-  const abstractPlayerDesign = document.createElement("img");
-  abstractPlayerDesign.style.display = "flex";
-  abstractPlayerDesign.style.justifyContent = "space-around";
-  const playerDiscard = document.getElementById("player-discard");
-  playerDiscard.innerHTML = `<img src="${imgBackPrefix}abstract.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-};
-
-//abstractClouds:
-const handleAbstractCloudsDesignChange = () => {
-  // deck card
-  const abstractCloudsDesign = document.createElement("img");
-  abstractCloudsDesign.style.display = "flex";
-  abstractCloudsDesign.style.justifyContent = "space-around";
-  abstractCloudsDesign.style.borderRadius = "1rem";
-  const deckCard = document.getElementById("deck-card");
-  deckCard.innerHTML = `<img src="${imgBackPrefix}abstractclouds.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  //computer discard
-  const abstractCloudsComputerDesign = document.createElement("img");
-  abstractCloudsComputerDesign.style.display = "flex";
-  abstractCloudsComputerDesign.style.justifyContent = "space-around";
-  const computerDiscard = document.getElementById("computer-discard");
-  computerDiscard.innerHTML = `<img src="${imgBackPrefix}abstractclouds.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  // player discard
-  const abstractCloudsPlayerDesign = document.createElement("img");
-  abstractCloudsPlayerDesign.style.display = "flex";
-  abstractCloudsPlayerDesign.style.justifyContent = "space-around";
-  const playerDiscard = document.getElementById("player-discard");
-  playerDiscard.innerHTML = `<img src="${imgBackPrefix}abstractclouds.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-};
-
-//abstractScene:
-const handleAbstractSceneDesignChange = () => {
-  // deck card
-  const abstractSceneDesign = document.createElement("img");
-  abstractSceneDesign.style.display = "flex";
-  abstractSceneDesign.style.justifyContent = "space-around";
-  abstractSceneDesign.style.borderRadius = "1rem";
-  const deckCard = document.getElementById("deck-card");
-  deckCard.innerHTML = `<img src="${imgBackPrefix}abstractscene.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  //computer discard
-  const abstractSceneComputerDesign = document.createElement("img");
-  abstractSceneComputerDesign.style.display = "flex";
-  abstractSceneComputerDesign.style.justifyContent = "space-around";
-  const computerDiscard = document.getElementById("computer-discard");
-  computerDiscard.innerHTML = `<img src="${imgBackPrefix}abstractscene.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  // player discard
-  const abstractScenePlayerDesign = document.createElement("img");
-  abstractScenePlayerDesign.style.display = "flex";
-  abstractScenePlayerDesign.style.justifyContent = "space-around";
-  const playerDiscard = document.getElementById("player-discard");
-  playerDiscard.innerHTML = `<img src="${imgBackPrefix}abstractscene.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-};
-
-//cars:
-const handleCarsDesignChange = () => {
-  // deck card
-  const carsDesign = document.createElement("img");
-  carsDesign.style.display = "flex";
-  carsDesign.style.justifyContent = "space-around";
-  carsDesign.style.borderRadius = "1rem";
-  const deckCard = document.getElementById("deck-card");
-  deckCard.innerHTML = `<img src="${imgBackPrefix}cars.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  //computer discard
-  const carsComputerDesign = document.createElement("img");
-  carsComputerDesign.style.display = "flex";
-  carsComputerDesign.style.justifyContent = "space-around";
-  const computerDiscard = document.getElementById("computer-discard");
-  computerDiscard.innerHTML = `<img src="${imgBackPrefix}cars.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  // player discard
-  const carsPlayerDesign = document.createElement("img");
-  carsPlayerDesign.style.display = "flex";
-  carsPlayerDesign.style.justifyContent = "space-around";
-  const playerDiscard = document.getElementById("player-discard");
-  playerDiscard.innerHTML = `<img src="${imgBackPrefix}cars.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-};
-
-//astronaut:
-const handleAstronautDesignChange = () => {
-  // deck card
-  const astronautDesign = document.createElement("img");
-  astronautDesign.style.display = "flex";
-  astronautDesign.style.justifyContent = "space-around";
-  astronautDesign.style.borderRadius = "1rem";
-  const deckCard = document.getElementById("deck-card");
-  deckCard.innerHTML = `<img src="${imgBackPrefix}astronaut.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  //computer discard
-  const astronautComputerDesign = document.createElement("img");
-  astronautComputerDesign.style.display = "flex";
-  astronautComputerDesign.style.justifyContent = "space-around";
-  const computerDiscard = document.getElementById("computer-discard");
-  computerDiscard.innerHTML = `<img src="${imgBackPrefix}astronaut.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  // player discard
-  const astronautPlayerDesign = document.createElement("img");
-  astronautPlayerDesign.style.display = "flex";
-  astronautPlayerDesign.style.justifyContent = "space-around";
-  const playerDiscard = document.getElementById("player-discard");
-  playerDiscard.innerHTML = `<img src="${imgBackPrefix}astronaut.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-};
-
-//frog:
-const handleFrogDesignChange = () => {
-  // deck card
-  const frogDesign = document.createElement("img");
-  frogDesign.style.display = "flex";
-  frogDesign.style.justifyContent = "space-around";
-  frogDesign.style.borderRadius = "1rem";
-  const deckCard = document.getElementById("deck-card");
-  deckCard.innerHTML = `<img src="${imgBackPrefix}frog.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  //computer discard
-  const frogComputerDesign = document.createElement("img");
-  frogComputerDesign.style.display = "flex";
-  frogComputerDesign.style.justifyContent = "space-around";
-  const computerDiscard = document.getElementById("computer-discard");
-  computerDiscard.innerHTML = `<img src="${imgBackPrefix}frog.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  // player discard
-  const frogPlayerDesign = document.createElement("img");
-  frogPlayerDesign.style.display = "flex";
-  frogPlayerDesign.style.justifyContent = "space-around";
-  const playerDiscard = document.getElementById("player-discard");
-  playerDiscard.innerHTML = `<img src="${imgBackPrefix}frog.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-};
-
-//fish:
-const handleFishDesignChange = () => {
-  // deck card
-  const fishDesign = document.createElement("img");
-  fishDesign.style.display = "flex";
-  fishDesign.style.justifyContent = "space-around";
-  fishDesign.style.borderRadius = "1rem";
-  const deckCard = document.getElementById("deck-card");
-  deckCard.innerHTML = `<img src="${imgBackPrefix}fish.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  //computer discard
-  const fishComputerDesign = document.createElement("img");
-  fishComputerDesign.style.display = "flex";
-  fishComputerDesign.style.justifyContent = "space-around";
-  const computerDiscard = document.getElementById("computer-discard");
-  computerDiscard.innerHTML = `<img src="${imgBackPrefix}fish.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  // player discard
-  const fishPlayerDesign = document.createElement("img");
-  fishPlayerDesign.style.display = "flex";
-  fishPlayerDesign.style.justifyContent = "space-around";
-  const playerDiscard = document.getElementById("player-discard");
-  playerDiscard.innerHTML = `<img src="${imgBackPrefix}fish.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-};
-
-// click events:
-red.addEventListener("click", handleRedDesignChange);
-blue.addEventListener("click", handleBlueDesignChange);
-abstract.addEventListener("click", handleAbstractDesignChange);
-abstractClouds.addEventListener("click", handleAbstractCloudsDesignChange);
-abstractScene.addEventListener("click", handleAbstractSceneDesignChange);
-cars.addEventListener("click", handleCarsDesignChange);
-astronaut.addEventListener("click", handleAstronautDesignChange);
-frog.addEventListener("click", handleFrogDesignChange);
-fish.addEventListener("click", handleFishDesignChange);
-//#endregion CARD BACK DESIGN SELECTION
-//
-//#region RENDER CARDS IN PLAY:
-// dom nodes
+//#region EVENT LISTENERS:
+const deckCard = document.getElementById("deck-card");
 const computerPlayCard = document.getElementById("computer-play-card");
 const playerPlayCard = document.getElementById("player-play-card");
+const computerDiscard = document.getElementById("computer-discard");
+const playerDiscard = document.getElementById("player-discard");
+const urlPrefix =
+  "https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523441/PlayingCards/war-deck-png/";
 
-//callback function
-const handleCardsInPlay = () => {
-  //when playerPlayCard is clicked
-  //
-  //change image of computersCard && playersCard
-  //    grab computerPlayCard && playerPlayCard
-  //    change each to current corresponding computersCard & playersCard
-  //        create new image element
-  //        src=`${urlPrefix}${RankOfSuit}.png` of computersCard
-  //        src=`${urlPrefix}${RankOfSuit}.png` of playersCard
-  //    computerPlayCardImg.style.whatever = "stylings of card on page this replaces"
-  //   display: flex;
-  //   justify-content: space-evenly;
-  //    attach each to corresponding div
-  //    pat self on back for being awesome
-};
+deckCard.addEventListener("click", () => {
+  console.log(newDeck);
+  // shuffle deck
+  newDeck.shuffle();
+  // deal
+  newDeck.deal(computer, player);
+  // remove deck from DOM
+  deckCard.style.display = "none";
+  // display the playing cards instead
+  computerPlayCard.style.display = "flex";
+  computerPlayCard.style.justifyContent = "space-evenly";
+  playerPlayCard.style.display = "flex";
+  playerPlayCard.style.justifyContent = "space-evenly";
+});
 
-//event listeners
-// computerPlayCard.addEventListener("click", handleComputerPlayCard);
-playerPlayCard.addEventListener("click", handleCardsInPlay);
-
-//#endregion RENDER CARDS IN PLAY
-//#endregion DOM RENDER
-
-//#region EVENT LISTENERS:
-//
-// <<<-------------------------------------------------------------------------- add event listeners:
-// <<<-------------------------------------------------------------------------- DECK: begin game
-// <<<-------------------------------------------------------------------------- RESET: play again?
-const collapseBtn = document.getElementById("sidebar-collapse-btn");
-const sidebar = document.getElementById("sidebar");
-const container = document.querySelector(".container");
-handleCollapseBtn = () => {
-  sidebar.classList.toggle("close");
-};
-collapseBtn.addEventListener("click", handleCollapseBtn);
-
+// initial click player card in play click:
+playerPlayCard.addEventListener("click", () => {
+  // player card is replaced with current card being played
+  //   console.log(player.playCard());
+  const playerCardInPlay = player.playCard();
+  //   console.log(playerCardInPlay);
+  console.log(playerCardInPlay.id);
+  playerPlayCard.innerHTML = `<img src="${urlPrefix}${playerCardInPlay.id}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+  // computer card is also replaced
+  const computerCardInPlay = computer.playCard();
+  console.log(computerCardInPlay.id);
+  computerPlayCard.innerHTML = `<img src="${urlPrefix}${computerCardInPlay.id}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+  // computer-/player-discard should now display
+  computerDiscard.style.display = "flex";
+  playerDiscard.style.display = "flex";
+  // battle
+  battle(computer, player);
+});
 //#endregion EVENT LISTENERS
-
-//#region MODAL:
-// select the open-btn button
-let openBtn = document.getElementById("rules-btn-container");
-// select the modal-background
-let modalBackground = document.getElementById("modal-background");
-// select the close-btn
-let closeBtn = document.getElementById("close-btn");
-
-// shows the modal when the user clicks open-btn
-openBtn.addEventListener("click", function () {
-  modalBackground.style.display = "block";
-});
-
-// hides the modal when the user clicks close-btn
-closeBtn.addEventListener("click", function () {
-  modalBackground.style.display = "none";
-});
-
-// hides the modal when the user clicks outside the modal
-window.addEventListener("click", function (event) {
-  // check if the event happened on the modal-background
-  if (event.target === modalBackground) {
-    // hides the modal
-    modalBackground.style.display = "none";
-  }
-});
-
-//#endregion MODAL
