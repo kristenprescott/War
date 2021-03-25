@@ -15,7 +15,7 @@
       <!-- MAIN -->
       <div id="main" class="main">
         <!-- MAIN HEADER AREA -->
-        <div id="main-header" class="main-header">WAR</div>
+        <div id="main-header" class="main-header">War</div>
         <!-- MAIN PLAY AREA -->
         <div id="main-play-area" class="main-play-area">
           <!-- CARD PLAY SECTION -->
@@ -74,13 +74,25 @@
         <!-- MAIN SCORE AREA -->
         <div id="main-score-area" class="main-score-area">
           <!-- COMPUTER SCORE BOX -->
-          <div id="computer-score" class="computer-score">26</div>
+          <div id="computer-score" class="count-score">
+            <div class="score-box">
+              <div class="score-title">CARD COUNT:</div>
+              <span id="score">0</span>
+            </div>
+          </div>
           <!-- PLAY BTN BOX -->
-          <div id="play-btn-container" class="play-btn-container">
-            <span id="play-btn" class="btn play-btn">Play</span>
+          <div id="info-container" class="info-container">
+            <span id="info-text" class="info-text"
+              >Click the deck to start the game.</span
+            >
           </div>
           <!-- PLAYER SCORE BOX -->
-          <div id="player-score" class="player-score">26</div>
+          <div id="player-score" class="count-score">
+            <div class="score-box">
+              <div class="score-title">CARD COUNT:</div>
+              <span id="score">0</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -180,7 +192,8 @@
             <div id="modal-background">
               <div id="modal">
                 <span id="close-btn">&times;</span>
-                <h3>Rules</h3>
+                <h3 class="modal-title">Rules:</h3>
+                <hr />
                 <p>The goal is to be the first player to win all 52 cards</p>
                 <h5>THE DEAL</h5>
                 <p>
@@ -203,6 +216,10 @@
                 </p>
                 <h5>HOW TO KEEP SCORE</h5>
                 <p>The game ends when one player has won all the cards.</p>
+                <br />
+                <span class="citation"
+                  >https://bicyclecards.com/how-to-play/war/</span
+                >
               </div>
             </div>
             <!--  -->

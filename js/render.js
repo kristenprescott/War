@@ -1,19 +1,5 @@
 //#region DOM RENDER:
 //#region CARD BACK DESIGN SELECTION:
-// cached DOM elements:
-const red = document.getElementById("red");
-const blue = document.getElementById("blue");
-const abstract = document.getElementById("abstract");
-const abstractClouds = document.getElementById("abstract-clouds");
-const abstractScene = document.getElementById("abstract-scene");
-const cars = document.getElementById("cars");
-const astronaut = document.getElementById("astronaut");
-const frog = document.getElementById("frog");
-const fish = document.getElementById("fish");
-
-// variables:
-const imgBackPrefix =
-  "https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/";
 
 // callback functions for click events:
 //red:

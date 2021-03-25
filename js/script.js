@@ -1,11 +1,34 @@
+//#region GLOBAL VARIABLES:
+const imgBackPrefix =
+  "https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/";
+const urlPrefix =
+  "https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523441/PlayingCards/war-deck-png/";
+
+// cached DOM elements:
+const deckCard = document.getElementById("deck-card");
+const computerPlayCard = document.getElementById("computer-play-card");
+const playerPlayCard = document.getElementById("player-play-card");
+const computerDiscard = document.getElementById("computer-discard");
+const playerDiscard = document.getElementById("player-discard");
+const red = document.getElementById("red");
+const blue = document.getElementById("blue");
+const abstract = document.getElementById("abstract");
+const abstractClouds = document.getElementById("abstract-clouds");
+const abstractScene = document.getElementById("abstract-scene");
+const cars = document.getElementById("cars");
+const astronaut = document.getElementById("astronaut");
+const frog = document.getElementById("frog");
+const fish = document.getElementById("fish");
+//#endregion GLOBAL VARIABLES
+
 //#region CLASSES
 class Deck {
   constructor() {
     this.deck = [];
     this.deckLength = 0;
 
-    const suits = ["Spades"];
-    // const suits = ["Spades", "Hearts", "Clubs", "Diamonds"];
+    // const suits = ["Spades"];
+    const suits = ["Spades", "Hearts", "Clubs", "Diamonds"];
 
     // const ranks = ["2", "3"];
 
@@ -95,7 +118,11 @@ class Player {
   updateScore = (domRef) => {
     this.score = this.hand.length + this.discardPile.length;
     // print score to DOM:
-    domRef.innerText = this.score;
+    const score = this.score;
+    domRef.innerHTML = `<div class="score-box">
+              <div class="score-title">CARD COUNT:</div>
+              <span id="score">${score}</span>
+            </div>`;
   };
   showDiscardPileValues = () => {
     return this.discardPile[this.discardPile.length - 1];
@@ -121,9 +148,27 @@ const newDeck = new Deck();
 const battle = (computer, player) => {
   const computersCard = computer.playCard();
   const playersCard = player.playCard();
+  let computerCardInPlay = computer.playCard();
+  let playerCardInPlay = player.playCard();
 
-  const computersDiscards = computer.showDiscardPileValues();
-  const playersDiscards = player.showDiscardPileValues();
+  if (computer.hand.length > 0 || player.hand.length > 0) {
+    computerPlayCard.innerHTML = `<img src="${urlPrefix}${computerCardInPlay.id}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+    playerPlayCard.innerHTML = `<img src="${urlPrefix}${playerCardInPlay.id}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+  } else if (computer.hand.length === 0 || player.hand.length === 0) {
+    computerPlayCard.style.display = "none";
+    playerPlayCard.style.display = "none";
+    // // then reshuffle discard pile
+    // reshuffleDiscardPile(
+    //   computer.discardPile,
+    //   player.discardPile,
+    //   computer.hand,
+    //   player.hand
+    // );
+    // computerPlayCard.style.display = "flex";
+    // playerPlayCard.style.display = "flex";
+    // computerPlayCard.innerHTML = `<img src="${urlPrefix}${computerCardInPlay.id}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+    // playerPlayCard.innerHTML = `<img src="${urlPrefix}${playerCardInPlay.id}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+  }
 
   //#region COMPARE CARDS
   // compare cards:
@@ -188,8 +233,7 @@ const battle = (computer, player) => {
   //#endregion UPDATE & PRINT SCORES
 
   //#region CHECK FOR WINNER
-  // check if players hands.length + players discardPile.length = deck.length
-  // check if anyone won the game yet
+  // check if players hands.length + players discardPile.length = deck.length - if anyone won the game yet
   if (
     computer.score === newDeck.deckLength ||
     player.score === newDeck.deckLength
@@ -212,26 +256,10 @@ const battle = (computer, player) => {
     console.log(loser.score);
     console.log(loser.discardPile.length);
     // <<<-------------------------------------------------------------------------- print winner announcement
+    alert(winner + "won!");
     return winner;
   }
   //#endregion CHECK FOR WINNER
-
-  //   //   //#region CHECK FOR EMPTY HANDS TO RESHUFFLE AND USE AS NEW HAND:
-  //   // check if players hands are empty
-  //   if (computer.hand.length === 0) {
-  //     // shuffle discardPile
-  //     newDeck.shuffle(computer.discardPile);
-  //     // push discardPile to hand
-  //     computer.hand.push(
-  //       computer.discardPile.splice(0, computer.discardPile.length)
-  //     );
-  //   }
-  //   if (player.hand.length === 0) {
-  //     // shuffle discardPile
-  //     newDeck.shuffle(player.discardPile);
-  //     // push discardPile to hand
-  //     player.hand.push(player.discardPile.splice(0, player.discardPile.length));
-  //   }
 };
 
 //   //   //#endregion CHECK FOR EMPTY HANDS TO RESHUFFLE AND USE AS NEW HAND
@@ -244,12 +272,17 @@ const reshuffleDiscardPile = (
   //   //#region CHECK FOR EMPTY HANDS TO RESHUFFLE AND USE AS NEW HAND:
   // check if players hands are empty
   if (computer.hand.length === 0) {
+    computerPlayCard.style.display = "none";
+    // computerPlayCard.innerHTML = `<img src="${urlPrefix}${red}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+
     // shuffle discardPile
     newDeck.shuffle(computer.discardPile);
     // push discardPile to hand
     computer.hand = computer.discardPile.splice(0, computer.discardPile.length);
   }
   if (player.hand.length === 0) {
+    playerPlayCard.style.display = "none";
+    // playerPlayCard.innerHTML = `<img src="${urlPrefix}${red}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
     // shuffle discardPile
     newDeck.shuffle(player.discardPile);
     // push discardPile to hand
@@ -274,13 +307,6 @@ const reshuffleDiscardPile = (
 //#endregion WAR
 
 //#region EVENT LISTENERS:
-const deckCard = document.getElementById("deck-card");
-const computerPlayCard = document.getElementById("computer-play-card");
-const playerPlayCard = document.getElementById("player-play-card");
-const computerDiscard = document.getElementById("computer-discard");
-const playerDiscard = document.getElementById("player-discard");
-const urlPrefix =
-  "https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523441/PlayingCards/war-deck-png/";
 
 deckCard.addEventListener("click", () => {
   newDeck.shuffle();
@@ -289,23 +315,10 @@ deckCard.addEventListener("click", () => {
   deckCard.style.display = "none";
 
   computerPlayCard.style.display = "flex";
-  computerPlayCard.style.justifyContent = "space-evenly";
   playerPlayCard.style.display = "flex";
-  playerPlayCard.style.justifyContent = "space-evenly";
 });
 
 playerPlayCard.addEventListener("click", () => {
-  //   console.log(player.playCard());
-  let playerCardInPlay = player.playCard();
-  //   console.log("playerCardInPlay: ");
-  //   console.log(playerCardInPlay.id);
-  playerPlayCard.innerHTML = `<img src="${urlPrefix}${playerCardInPlay.id}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  let computerCardInPlay = computer.playCard();
-  //   console.log("computerCardInPlay: ");
-  //   console.log(computerCardInPlay.id);
-  computerPlayCard.innerHTML = `<img src="${urlPrefix}${computerCardInPlay.id}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
   computerDiscard.style.display = "flex";
   playerDiscard.style.display = "flex";
 
@@ -314,36 +327,21 @@ playerPlayCard.addEventListener("click", () => {
 
 // click event for player discard pile to reshuffle when playing cards have run out:
 playerDiscard.addEventListener("click", () => {
-  // note: add instructions to battle method or somewhere to print to DOM
-  // also, only add this event when needed - yeah, fix that.
-  // oh, and make the cursor = pointer once you've figured that out
-  // reshuffle discardPile
-
+  // remove player and computer discard piles from DOM (should be replaced when player clicks playing card to go again)
+  computerDiscard.style.display = "none";
+  playerDiscard.style.display = "none";
+  // then reshuffle discard pile
   reshuffleDiscardPile(
     computer.discardPile,
     player.discardPile,
     computer.hand,
     player.hand
   );
-
-  // remove player and computer discard piles from DOM (should be replaced when player clicks playing card to go again)
-  computerDiscard.style.display = "none";
-  playerDiscard.style.display = "none";
-
-  //rerender computer and player play cards
-  //   let computerCardInPlay = computer.playCard(computer.hand);
-  //   let playerCardInPlay = player.playCard(player.hand);
-
-  //   computerPlayCard.innerHTML = `<img src="${urlPrefix}${computerCardInPlay.id}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-  //   playerPlayCard.innerHTML = `<img src="${urlPrefix}${playerCardInPlay.id}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-
-  computerDiscard.style.display = "flex";
-  playerDiscard.style.display = "flex";
-  // reset play cards values
-  //   let computerCardInPlay = computer.playCard(computer.discardPile);
-  //   let playerCardInPlay = player.playCard(player.discardPile);
-  // hm... may have to redefine some things. card values, their images etc...
-  //
-  // note: make sure score still works
+  // then show playing cards again
+  computerPlayCard.innerHTML = `<img src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/red.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+  playerPlayCard.innerHTML = `<img src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/red.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+  computerPlayCard.style.display = "flex";
+  playerPlayCard.style.display = "flex";
+  // at this point, this works - BUT only the first time around... hm
 });
 //#endregion EVENT LISTENERS
