@@ -1,4 +1,3 @@
-//#region DOM RENDER:
 //#region CARD BACK DESIGN SELECTION:
 
 // callback functions for click events:
@@ -361,42 +360,11 @@ cars.addEventListener("click", handleCarsDesignChange);
 astronaut.addEventListener("click", handleAstronautDesignChange);
 frog.addEventListener("click", handleFrogDesignChange);
 fish.addEventListener("click", handleFishDesignChange);
-//#endregion CARD BACK DESIGN SELECTION
-//
-// //#region RENDER CARDS IN PLAY:
-// // dom nodes
-// const computerPlayCard = document.getElementById("computer-play-card");
-// const playerPlayCard = document.getElementById("player-play-card");
-
-//callback function
-const handleCardsInPlay = () => {
-  //when playerPlayCard is clicked
-  //
-  //change image of computersCard && playersCard
-  //    grab computerPlayCard && playerPlayCard
-  //    change each to current corresponding computersCard & playersCard
-  //        create new image element
-  //        src=`${urlPrefix}${RankOfSuit}.png` of computersCard
-  //        src=`${urlPrefix}${RankOfSuit}.png` of playersCard
-  //    computerPlayCardImg.style.whatever = "stylings of card on page this replaces"
-  //   display: flex;
-  //   justify-content: space-evenly;
-  //    attach each to corresponding div
-  //    pat self on back for being awesome
-};
-
-//event listeners
-// computerPlayCard.addEventListener("click", handleComputerPlayCard);
-playerPlayCard.addEventListener("click", handleCardsInPlay);
 
 //#endregion RENDER CARDS IN PLAY
-//#endregion DOM RENDER
 
 //#region EVENT LISTENERS:
-//
-// <<<-------------------------------------------------------------------------- add event listeners:
-// <<<-------------------------------------------------------------------------- DECK: begin game
-// <<<-------------------------------------------------------------------------- RESET: play again?
+
 const collapseBtn = document.getElementById("sidebar-collapse-btn");
 const sidebar = document.getElementById("sidebar");
 const container = document.querySelector(".container");

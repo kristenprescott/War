@@ -239,7 +239,9 @@ deckCard.addEventListener("click", () => {
   playerPlayCard.style.display = "flex";
   // change info text
   infoText.innerText = "Click your card to battle.";
+  sidebar.classList.add("close");
 });
+
 // click playing card to compare cards
 playerPlayCard.addEventListener("click", () => {
   // show discard pile
