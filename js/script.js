@@ -4,7 +4,7 @@ class Deck {
     this.deck = [];
     this.deckLength = 0;
 
-    const suits = ["Spades", "Hearts"];
+    const suits = ["Spades"];
     // const suits = ["Spades", "Hearts", "Clubs", "Diamonds"];
 
     // const ranks = ["2", "3"];
@@ -23,7 +23,6 @@ class Deck {
       "J",
       "Q",
       "K",
-      //   "A",
     ];
 
     // pushes { rank: rank, suit: suit }
@@ -90,13 +89,16 @@ class Player {
   playCard = () => {
     // let cardInPlay = this.hand[this.hand.length - 1];
     // return cardInPlay;
-
+    // pass in any arr, when playcard is called pass in player/computer.hand/.discardPile when needed
     return this.hand[this.hand.length - 1];
   };
   updateScore = (domRef) => {
     this.score = this.hand.length + this.discardPile.length;
     // print score to DOM:
     domRef.innerText = this.score;
+  };
+  showDiscardPileValues = () => {
+    return this.discardPile[this.discardPile.length - 1];
   };
 }
 
@@ -120,6 +122,9 @@ const battle = (computer, player) => {
   const computersCard = computer.playCard();
   const playersCard = player.playCard();
 
+  const computersDiscards = computer.showDiscardPileValues();
+  const playersDiscards = player.showDiscardPileValues();
+
   //#region COMPARE CARDS
   // compare cards:
   if (computersCard.value === playersCard.value) {
@@ -133,11 +138,15 @@ const battle = (computer, player) => {
     // <<<-------------------------------------------------------------------------- print ('draw')
     // <<<-------------------------------------------------------------------------- some animation
     // pop last card out of hand, push into discard pile(for computersCard & playersCard)
-    computer.discardPile.push(
-      computer.hand.splice(computer.hand.length - 1, 1)
-    );
+    computer.hand.pop();
+    computer.discardPile.push(computersCard);
+    player.hand.pop();
+    player.discardPile.push(playersCard);
+    // console.log("computersDiscards values after accepting hand items");
+    // console.log(computersDiscards.value);
 
-    player.discardPile.push(player.hand.splice(player.hand.length - 1, 1));
+    // console.log("playersDiscards values after accepting hand items");
+    // console.log(playersDiscards.value);
   } else if (computersCard.value > playersCard.value) {
     console.log("COMPUTER WINS with: " + computersCard.name);
     console.log("computer card/value: ");
@@ -148,10 +157,11 @@ const battle = (computer, player) => {
     console.log(playersCard.value);
     // <<<-------------------------------------------------------------------------- print 'you lost this battle, but you may win the war yet'
     // <<<-------------------------------------------------------------------------- explode playersCard
-    computer.discardPile.push(
-      player.hand.splice(player.hand.length - 1, 1),
-      computer.hand.splice(computer.hand.length - 1, 1)
-    );
+    player.hand.pop();
+    computer.hand.pop();
+    computer.discardPile.push(computersCard, playersCard);
+    // console.log("computersDiscards values after accepting hand items");
+    // console.log(computersDiscards.value);
   } else {
     console.log("PLAYER WINS with: " + playersCard.name);
     console.log("computer card/value: ");
@@ -162,10 +172,11 @@ const battle = (computer, player) => {
     console.log(playersCard.value);
     // <<<-------------------------------------------------------------------------- print 'you won this battle!'
     // <<<-------------------------------------------------------------------------- explode computersCard
-    player.discardPile.push(
-      computer.hand.splice(computer.hand.length - 1, 1),
-      player.hand.splice(player.hand.length - 1, 1)
-    );
+    computer.hand.pop();
+    player.hand.pop();
+    player.discardPile.push(computersCard, playersCard);
+    // console.log("playersDiscards values after accepting hand items");
+    // console.log(playersDiscards.value);
   }
   //#endregion COMPARE CARDS
 
@@ -205,7 +216,32 @@ const battle = (computer, player) => {
   }
   //#endregion CHECK FOR WINNER
 
-  //#region CHECK FOR EMPTY HANDS TO RESHUFFLE AND USE AS NEW HAND:
+  //   //   //#region CHECK FOR EMPTY HANDS TO RESHUFFLE AND USE AS NEW HAND:
+  //   // check if players hands are empty
+  //   if (computer.hand.length === 0) {
+  //     // shuffle discardPile
+  //     newDeck.shuffle(computer.discardPile);
+  //     // push discardPile to hand
+  //     computer.hand.push(
+  //       computer.discardPile.splice(0, computer.discardPile.length)
+  //     );
+  //   }
+  //   if (player.hand.length === 0) {
+  //     // shuffle discardPile
+  //     newDeck.shuffle(player.discardPile);
+  //     // push discardPile to hand
+  //     player.hand.push(player.discardPile.splice(0, player.discardPile.length));
+  //   }
+};
+
+//   //   //#endregion CHECK FOR EMPTY HANDS TO RESHUFFLE AND USE AS NEW HAND
+const reshuffleDiscardPile = (
+  computerDiscardPile,
+  playerDiscardPile,
+  computerHand,
+  playerHand
+) => {
+  //   //#region CHECK FOR EMPTY HANDS TO RESHUFFLE AND USE AS NEW HAND:
   // check if players hands are empty
   if (computer.hand.length === 0) {
     // shuffle discardPile
@@ -219,8 +255,8 @@ const battle = (computer, player) => {
     // push discardPile to hand
     player.hand = player.discardPile.splice(0, player.discardPile.length);
   }
-  //#endregion CHECK FOR EMPTY HANDS TO RESHUFFLE AND USE AS NEW HAND
 };
+//   //#endregion CHECK FOR EMPTY HANDS TO RESHUFFLE AND USE AS NEW HAND
 
 //#endregion BATTLE
 
@@ -247,37 +283,67 @@ const urlPrefix =
   "https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523441/PlayingCards/war-deck-png/";
 
 deckCard.addEventListener("click", () => {
-  //   console.log(newDeck);
-  // shuffle deck
   newDeck.shuffle();
-  // deal
   newDeck.deal(computer, player);
-  // remove deck from DOM
+
   deckCard.style.display = "none";
-  // display the playing cards instead
+
   computerPlayCard.style.display = "flex";
   computerPlayCard.style.justifyContent = "space-evenly";
   playerPlayCard.style.display = "flex";
   playerPlayCard.style.justifyContent = "space-evenly";
 });
 
-// initial click player card in play click:
 playerPlayCard.addEventListener("click", () => {
-  // player card is replaced with current card being played
   //   console.log(player.playCard());
-  const playerCardInPlay = player.playCard();
+  let playerCardInPlay = player.playCard();
   //   console.log("playerCardInPlay: ");
   //   console.log(playerCardInPlay.id);
   playerPlayCard.innerHTML = `<img src="${urlPrefix}${playerCardInPlay.id}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-  // computer card is also replaced
-  const computerCardInPlay = computer.playCard();
+
+  let computerCardInPlay = computer.playCard();
   //   console.log("computerCardInPlay: ");
   //   console.log(computerCardInPlay.id);
   computerPlayCard.innerHTML = `<img src="${urlPrefix}${computerCardInPlay.id}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-  // computer-/player-discard should now display
+
   computerDiscard.style.display = "flex";
   playerDiscard.style.display = "flex";
-  // battle
+
   battle(computer, player);
+});
+
+// click event for player discard pile to reshuffle when playing cards have run out:
+playerDiscard.addEventListener("click", () => {
+  // note: add instructions to battle method or somewhere to print to DOM
+  // also, only add this event when needed - yeah, fix that.
+  // oh, and make the cursor = pointer once you've figured that out
+  // reshuffle discardPile
+
+  reshuffleDiscardPile(
+    computer.discardPile,
+    player.discardPile,
+    computer.hand,
+    player.hand
+  );
+
+  // remove player and computer discard piles from DOM (should be replaced when player clicks playing card to go again)
+  computerDiscard.style.display = "none";
+  playerDiscard.style.display = "none";
+
+  //rerender computer and player play cards
+  //   let computerCardInPlay = computer.playCard(computer.hand);
+  //   let playerCardInPlay = player.playCard(player.hand);
+
+  //   computerPlayCard.innerHTML = `<img src="${urlPrefix}${computerCardInPlay.id}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+  //   playerPlayCard.innerHTML = `<img src="${urlPrefix}${playerCardInPlay.id}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+
+  computerDiscard.style.display = "flex";
+  playerDiscard.style.display = "flex";
+  // reset play cards values
+  //   let computerCardInPlay = computer.playCard(computer.discardPile);
+  //   let playerCardInPlay = player.playCard(player.discardPile);
+  // hm... may have to redefine some things. card values, their images etc...
+  //
+  // note: make sure score still works
 });
 //#endregion EVENT LISTENERS
