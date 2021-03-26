@@ -3,6 +3,8 @@ const imgBackPrefix =
   "https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/";
 const urlPrefix =
   "https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523441/PlayingCards/war-deck-png/";
+const imageStyles =
+  ' width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"';
 
 // cached DOM elements:
 const computerScore = document.getElementById("computer-score");
@@ -123,56 +125,83 @@ const newDeck = new Deck();
 //#endregion INSTANCES
 
 //#region FUNCTIONS:
-// check for empty hand, reshuffle discard pile to continue playing if hand is empty
-const reshuffleDiscardPile = (
-  computerDiscardPile,
-  playerDiscardPile,
-  computerHand,
-  playerHand
-) => {
-  //
-  //
-  // check if players hands are empty
-  if (computer.hand.length === 0) {
-    // shuffle discardPile
-    newDeck.shuffle(computer.discardPile);
-    // hide computer playing card
-    computerPlayCard.style.display = "none";
-    infoText.innerText =
-      "Click your won cards to reshuffle and add back to hand.";
-    // push discardPile to hand
-    computer.hand = computer.discardPile.splice(0, computer.discardPile.length);
-  }
+
+const reshuffleDiscardPile = (playerDiscardPile, playerHand) => {
+  // check if players hand is empty
   if (player.hand.length === 0) {
     // shuffle discardPile
     newDeck.shuffle(player.discardPile);
-    // hide player playing card
-    playerPlayCard.style.display = "none";
-    infoText.innerText =
-      "Click your won cards to reshuffle and add back to hand.";
+    // // hide player playing card
+    // // playerPlayCard.style.display = "none";
+    // alert("click your won cards to reshuffle and add back to hand");
+    // infoText.innerText =
+    //   "Click your won cards to reshuffle and add back to hand.";
     // push discardPile to hand
     player.hand = player.discardPile.splice(0, player.discardPile.length);
   }
 };
 
-// show/hide cards in hand based on how many are still in hand.
-const showCardInPlay = (computersCard, playersCard, infoText) => {
-  if (computer.hand.length > 0 || player.hand.length > 0) {
-    computerPlayCard.innerHTML = `<img src="${urlPrefix}${computersCard.id}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-    playerPlayCard.innerHTML = `<img src="${urlPrefix}${playersCard.id}.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+// show player card in play:
+const showCardInPlay = (playersCard, infoText) => {
+  if (player.hand.length > 0) {
+    playerPlayCard.innerHTML = `<img src="${urlPrefix}${playersCard.id}.png"${imageStyles}></img>`;
   }
-  if (computer.hand.length === 0 || player.hand.length === 0) {
-    computerPlayCard.style.display = "none";
+  if (player.hand.length === 0) {
     playerPlayCard.style.display = "none";
+    alert("click your discard pile to reshuffle and add back to hand");
     infoText.innerText =
       "Click your discard pile to reshuffle and add back to hand.";
   }
 };
 
+//#region COMPUTER LOGIC:
+// computer reshuffle stuff:
+const reshuffleComputerDiscardPile = (
+  computerDiscardPile,
+  computerHand,
+  infoText
+) => {
+  // check if computers hand is empty
+  if (computer.hand.length === 0) {
+    // shuffle discardPile
+    newDeck.shuffle(computer.discardPile);
+    // hide computer playing card
+    computerPlayCard.style.display = "none";
+
+    // push discardPile to hand
+    computer.hand = computer.discardPile.splice(0, computer.discardPile.length);
+    // show computer playing cards
+    computerPlayCard.innerHTML = `<img src="${imgBackPrefix}red.png"${imageStyles}></img>`;
+    computerPlayCard.style.display = "flex";
+    // show in info text
+    infoText.innerText = "computer is reshuffling";
+  }
+};
+
+// show computer card in play:
+const showComputerCardInPlay = (computersCard) => {
+  if (computer.hand.length > 0) {
+    computerPlayCard.innerHTML = `<img src="${urlPrefix}${computersCard.id}.png"${imageStyles}></img>`;
+  }
+  if (computer.hand.length === 0) {
+    computerPlayCard.style.display = "none";
+  }
+};
+
+//#endregion COMPUTER LOGIC
+
 // compare cards:
-const compareCards = (computersCard, playersCard) => {
-  // if tie:
-  if (computersCard.value === playersCard.value) {
+const compareCards = (
+  computersCard,
+  playersCard,
+  computerDiscardPile,
+  computerHand
+) => {
+  if (computer.hand.length === 0) {
+    // reshuffle computers discard pile if needed
+    reshuffleComputerDiscardPile(computerDiscardPile, computerHand, infoText);
+    // if tie:
+  } else if (computersCard.value === playersCard.value) {
     infoText.innerText = "it's a draw";
     // pop last card out of hand, push into discard pile(for computersCard & playersCard)
     computer.hand.pop();
@@ -203,7 +232,7 @@ const checkForWinner = () => {
     player.score === newDeck.deckLength
   ) {
     const winner = computer.score === newDeck.deckLength ? computer : player;
-    const loser = computer.score === "0" ? computer : player;
+    // const loser = computer.score === "0" ? computer : player;
 
     alert(winner + "won!");
     return winner;
@@ -212,18 +241,26 @@ const checkForWinner = () => {
 
 // play a round of War
 const playWar = (computer, player) => {
+  // show computer discard pile
+  computerDiscard.style.display = "flex";
+  // show player discard pile
+  playerDiscard.style.display = "flex";
   // variables for the cards currently in play
   const computersCard = computer.playCard();
   const playersCard = player.playCard();
   // check for a winner
   checkForWinner();
   // show current cards in play & update info text accordingly
-  showCardInPlay(computersCard, playersCard, infoText);
+  showCardInPlay(playersCard, infoText);
+  showComputerCardInPlay(computersCard);
+
   // compare cards
   compareCards(computersCard, playersCard);
-  // update computer & player scores
-  computer.updateScore(computerScore);
+  // update scores
+  // update player score
   player.updateScore(playerScore);
+  // update computer score
+  computer.updateScore(computerScore);
 };
 //#endregion FUNCTIONS
 
@@ -242,35 +279,32 @@ deckCard.addEventListener("click", () => {
   sidebar.classList.add("close");
 });
 
-// click playing card to compare cards
+// click playing card to show cards and playWar()
 playerPlayCard.addEventListener("click", () => {
-  // show discard pile
-  computerDiscard.style.display = "flex";
-  playerDiscard.style.display = "flex";
-  // invoke battle to compare cards
+  // start game
   playWar(computer, player);
 });
 
 // click discard pile to reshuffle when playing cards have run out:
 playerDiscard.addEventListener("click", () => {
   // hide playing cards
-  computerDiscard.style.display = "none";
   playerDiscard.style.display = "none";
+
   // reshuffle discard pile & return to hand to continue
-  reshuffleDiscardPile(
-    computer.discardPile,
-    player.discardPile,
-    computer.hand,
-    player.hand
-  );
-  // show playing cards
-  computerPlayCard.innerHTML = `<img src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/red.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-  playerPlayCard.innerHTML = `<img src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/red.png" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
-  computerPlayCard.style.display = "flex";
+  reshuffleDiscardPile(player.discardPile, player.hand);
+
+  // show player playing cards
+  playerPlayCard.innerHTML = `<img src="${imgBackPrefix}red.png"${imageStyles}></img>`;
   playerPlayCard.style.display = "flex";
   // change info text
   infoText.innerText = "Click your card to battle.";
-
-  // at this point, this works - BUT only the first time around... hm
 });
 //#endregion EVENT LISTENERS
+
+// // log state
+// const warLog = document.getElementById("logState");
+// warLog.addEventListener("click", () => {
+//   //
+//   console.log(player);
+//   console.log(computer);
+// });
