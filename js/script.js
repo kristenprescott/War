@@ -306,11 +306,6 @@ const app = () => {
     infoText.innerText = "Click your card to battle.";
   });
 
-  handleCollapseBtn = () => {
-    sidebar.classList.toggle("close");
-  };
-  collapseBtn.addEventListener("click", handleCollapseBtn);
-
   //#region MODAL:
 
   // shows the modal when the user clicks open-btn
@@ -351,4 +346,8 @@ playBtn.addEventListener("click", () => {
   app();
 });
 
+handleCollapseBtn = () => {
+  sidebar.classList.toggle("close");
+};
+collapseBtn.addEventListener("click", handleCollapseBtn);
 // reshuffle modal
