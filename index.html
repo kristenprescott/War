@@ -16,11 +16,14 @@
       <div id="main" class="main">
         <!-- MAIN HEADER AREA -->
         <div id="main-header" class="main-header">
+          <!-- <button id="reset-btn" class="btn">reset</button> -->
           War
-          <!-- <span id="logState">log</span> -->
+          <!-- <span id="logState" class="btn">log</span> -->
         </div>
         <!-- MAIN PLAY AREA -->
         <div id="main-play-area" class="main-play-area">
+          <div id="computer-title" class="box-title"><span>Computer</span></div>
+          <div id="player-title" class="box-title"><span>Player</span></div>
           <!-- CARD PLAY SECTION -->
           <div id="card-play-section" class="card-play-section">
             <div id="deck-card" class="card-wrapper deck-card">
@@ -38,6 +41,7 @@
               id="computer-play-card"
               class="card-wrapper computer-play-card"
             >
+              <!-- <span class="computer-play-card-title card-title">COMPUTER</span> -->
               <img
                 src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/red.png"
                 alt="front of playing card"
@@ -49,6 +53,7 @@
             </div>
             <!-- img tag here to be replaced with dynamic js image of card in play -->
             <div id="player-play-card" class="card-wrapper player-play-card">
+              <!-- <span class="player-play-card-title card-title">PLAYER</span> -->
               <img
                 src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/red.png"
                 alt="front of playing card"
@@ -62,6 +67,7 @@
           <!-- DISCARD SECTION -->
           <div id="discard-section" class="discard-section">
             <div id="computer-discard" class="card-wrapper computer-discard">
+              <!-- <span class="computer-discard-title card-title">C-DISCARD</span> -->
               <img
                 src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/red.png"
                 alt="back of playing card"
@@ -72,6 +78,7 @@
               />
             </div>
             <div id="player-discard" class="card-wrapper player-discard">
+              <!-- <span class="player-discard-title card-title">P-DISCARD</span> -->
               <img
                 src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/red.png"
                 alt="back of playing card"
@@ -95,9 +102,11 @@
           </div>
           <!-- PLAY BTN BOX -->
           <div id="info-container" class="info-container">
-            <span id="info-text" class="info-text"
+            <!-- <span id="info-text" class="info-text"
               >Click the deck to deal cards.</span
-            >
+            > -->
+            <span id="info-text" class="info-text"></span>
+            <button id="play-btn" class="btn play-btn">Play</button>
           </div>
           <!-- PLAYER SCORE BOX -->
           <div id="player-score" class="count-score">

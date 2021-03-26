@@ -31,6 +31,7 @@ const handleRedDesignChange = () => {
   redComputerDesign.style.justifyContent = "space-around";
   const computerPlayCard = document.getElementById("computer-play-card");
   computerPlayCard.innerHTML = `<img src="${imgBackPrefix}red.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+
   // player play card
   const redPlayerPlayDesign = document.createElement("img");
   redPlayerPlayDesign.style.display = "flex";
