@@ -8,7 +8,7 @@ const urlPrefix =
 const imageStyles =
   ' width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"';
 
-// cached DOM elements:
+// cached DOM nodes:
 const playBtn = document.getElementById("play-btn");
 const computerScore = document.getElementById("computer-score");
 const playerScore = document.getElementById("player-score");
@@ -18,6 +18,12 @@ const playerPlayCard = document.getElementById("player-play-card");
 const computerDiscard = document.getElementById("computer-discard");
 const playerDiscard = document.getElementById("player-discard");
 const infoText = document.getElementById("info-text");
+const collapseBtn = document.getElementById("sidebar-collapse-btn");
+const sidebar = document.getElementById("sidebar");
+const container = document.querySelector(".container");
+const openBtn = document.getElementById("rules-btn-container");
+const modalBackground = document.getElementById("modal-background");
+const closeBtn = document.getElementById("close-btn");
 const red = document.getElementById("red");
 const blue = document.getElementById("blue");
 const abstract = document.getElementById("abstract");
@@ -250,11 +256,13 @@ const app = () => {
 
     if (player.hand.length === 0) {
       playerPlayCard.innerHTML = "";
+
       alert("click your discard pile to reshuffle and add back to hand");
       infoText.innerText =
         "Click your discard pile to reshuffle and add back to hand.";
     }
   };
+
   //#endregion FUNCTIONS
 
   //#region EVENT LISTENERS:
@@ -297,6 +305,35 @@ const app = () => {
     // change info text
     infoText.innerText = "Click your card to battle.";
   });
+
+  handleCollapseBtn = () => {
+    sidebar.classList.toggle("close");
+  };
+  collapseBtn.addEventListener("click", handleCollapseBtn);
+
+  //#region MODAL:
+
+  // shows the modal when the user clicks open-btn
+  openBtn.addEventListener("click", function () {
+    modalBackground.style.display = "block";
+  });
+
+  // hides the modal when the user clicks close-btn
+  closeBtn.addEventListener("click", function () {
+    modalBackground.style.display = "none";
+  });
+
+  // hides the modal when the user clicks outside the modal
+  window.addEventListener("click", function (event) {
+    // check if the event happened on the modal-background
+    if (event.target === modalBackground) {
+      // hides the modal
+      modalBackground.style.display = "none";
+    }
+  });
+
+  //#endregion MODAL
+
   //#endregion EVENT LISTENERS
 };
 
@@ -313,3 +350,5 @@ playBtn.addEventListener("click", () => {
   sidebar.classList.add("close");
   app();
 });
+
+// reshuffle modal
