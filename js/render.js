@@ -146,14 +146,14 @@ const handleAbstractCloudsDesignChange = () => {
   abstractCloudsComputerPlayDesign.style.display = "flex";
   abstractCloudsComputerDesign.style.justifyContent = "space-around";
   const computerPlayCard = document.getElementById("computer-play-card");
-  computerPlayCard.innerHTML = `<img src="${imgBackPrefix}abstractClouds.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+  computerPlayCard.innerHTML = `<img src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523439/PlayingCards/war-deck-png/backs/abstractclouds.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
 
   // player play card
   const abstractCloudsPlayerPlayDesign = document.createElement("img");
   abstractCloudsPlayerPlayDesign.style.display = "flex";
   abstractCloudsPlayerDesign.style.justifyContent = "space-around";
   const playerPlayCard = document.getElementById("player-play-card");
-  playerPlayCard.innerHTML = `<img src="${imgBackPrefix}abstractClouds.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+  playerPlayCard.innerHTML = `<img src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523439/PlayingCards/war-deck-png/backs/abstractclouds.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
 };
 
 //abstractScene:
@@ -185,14 +185,14 @@ const handleAbstractSceneDesignChange = () => {
   abstractSceneComputerPlayDesign.style.display = "flex";
   abstractSceneComputerDesign.style.justifyContent = "space-around";
   const computerPlayCard = document.getElementById("computer-play-card");
-  computerPlayCard.innerHTML = `<img src="${imgBackPrefix}abstractScene.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+  computerPlayCard.innerHTML = `<img src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/abstractscene.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
 
   // player play card
   const abstractScenePlayerPlayDesign = document.createElement("img");
   abstractScenePlayerPlayDesign.style.display = "flex";
   abstractScenePlayerDesign.style.justifyContent = "space-around";
   const playerPlayCard = document.getElementById("player-play-card");
-  playerPlayCard.innerHTML = `<img src="${imgBackPrefix}abstractScene.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+  playerPlayCard.innerHTML = `<img src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/abstractscene.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
 };
 
 //cars:
