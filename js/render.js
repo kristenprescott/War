@@ -125,21 +125,21 @@ const handleAbstractCloudsDesignChange = () => {
   abstractCloudsDesign.style.justifyContent = "space-around";
   abstractCloudsDesign.style.borderRadius = "1rem";
   const deckCard = document.getElementById("deck-card");
-  deckCard.innerHTML = `<img src="${imgBackPrefix}abstractclouds.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+  deckCard.innerHTML = `<img src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523439/PlayingCards/war-deck-png/backs/abstractclouds.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
 
   //computer discard
   const abstractCloudsComputerDesign = document.createElement("img");
   abstractCloudsComputerDesign.style.display = "flex";
   abstractCloudsComputerDesign.style.justifyContent = "space-around";
   const computerDiscard = document.getElementById("computer-discard");
-  computerDiscard.innerHTML = `<img src="${imgBackPrefix}abstractclouds.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+  computerDiscard.innerHTML = `<img src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523439/PlayingCards/war-deck-png/backs/abstractclouds.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
 
   // player discard
   const abstractCloudsPlayerDesign = document.createElement("img");
   abstractCloudsPlayerDesign.style.display = "flex";
   abstractCloudsPlayerDesign.style.justifyContent = "space-around";
   const playerDiscard = document.getElementById("player-discard");
-  playerDiscard.innerHTML = `<img src="${imgBackPrefix}abstractclouds.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+  playerDiscard.innerHTML = `<img src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523439/PlayingCards/war-deck-png/backs/abstractclouds.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
 
   //computer play card
   const abstractCloudsComputerPlayDesign = document.createElement("img");
@@ -164,21 +164,21 @@ const handleAbstractSceneDesignChange = () => {
   abstractSceneDesign.style.justifyContent = "space-around";
   abstractSceneDesign.style.borderRadius = "1rem";
   const deckCard = document.getElementById("deck-card");
-  deckCard.innerHTML = `<img src="${imgBackPrefix}abstractscene.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+  deckCard.innerHTML = `<img src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/abstractscene.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
 
   //computer discard
   const abstractSceneComputerDesign = document.createElement("img");
   abstractSceneComputerDesign.style.display = "flex";
   abstractSceneComputerDesign.style.justifyContent = "space-around";
   const computerDiscard = document.getElementById("computer-discard");
-  computerDiscard.innerHTML = `<img src="${imgBackPrefix}abstractscene.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+  computerDiscard.innerHTML = `<img src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/abstractscene.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
 
   // player discard
   const abstractScenePlayerDesign = document.createElement("img");
   abstractScenePlayerDesign.style.display = "flex";
   abstractScenePlayerDesign.style.justifyContent = "space-around";
   const playerDiscard = document.getElementById("player-discard");
-  playerDiscard.innerHTML = `<img src="${imgBackPrefix}abstractscene.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
+  playerDiscard.innerHTML = `<img src="https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616523440/PlayingCards/war-deck-png/backs/abstractscene.png" width="180" height="260" style="box-shadow:-1rem -1rem 1rem 0px rgba(0, 0, 0, 0.7);"></img>`;
 
   //computer play card
   const abstractSceneComputerPlayDesign = document.createElement("img");
