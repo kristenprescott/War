@@ -1,12 +1,12 @@
 # Card game: War
 
-An in-browser game written in Javascript.
+An in-browser card game written in Javascript.
 
 ---
 
 ## Project link
 
-[Game of War](https://kristenprescott.github.io/War_Card_Game/)
+[Game of War](https://kristenprescott.github.io/War/)
 
 ![Screenshot](https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616747150/other/WarRules_daooct.png)
 
