@@ -14,7 +14,9 @@ An in-browser card game written in Javascript.
 
 ## Project Description
 
-A game of war played against the computer. Click "Play" to begin. The deck is shuffled and dealt, half to the player and half to the opponent. Then, the battle begins.
+An in-browser card game written in vanilla Javascript and styled with CSS. This was my first project for General Assembly’s Software Engineering Immersive program and it highlights how much I’ve learned from beginning to end.
+
+The card game of war is played against the computer. Click "Play" to begin. The deck is shuffled and dealt, half to the player and half to the opponent. Then, the battle begins.
 
 The card count in the bottom corners keeps track of the current scores, the number of cards currently accumulated in hand and in the discard pile. Once either player or opponent has run out of cards in hand, the discard pile is reshuffled and returned to the hand to continue playing.
 
