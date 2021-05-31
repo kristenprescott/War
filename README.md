@@ -6,7 +6,7 @@ An in-browser card game written in Javascript.
 
 ## Project link
 
-[War](https://kristenprescott.github.io/War/)
+[Demo](https://kristenprescott.github.io/War/)
 
 ![Screenshot](https://res.cloudinary.com/dp1pjn2sy/image/upload/v1616747150/other/WarRules_daooct.png)
 
